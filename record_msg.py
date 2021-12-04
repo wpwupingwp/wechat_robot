@@ -12,15 +12,15 @@ handle = open(record_file, 'a', encoding='utf-8')
 
 itchat.login()
 itchat.send('Hello world', toUserName='filehelper')
+me = itchat.search_friends()['UserName']
+# some group name is hard to get
 get_user_id()
-room_id = input('群聊ID：')
-me = input('自己ID:')
-
+room_id = input('要记录的群聊ID：')
 @itchat.msg_register([itchat.content.TEXT, ], isGroupChat=True)
 def record(msg):
     if msg['ToUserName'] != room_id:
         return
-    line = '\t'.join([datetime.now(), msg['AcutalNickName'], msg['Text']]) + '\n'
+    line = '\t'.join([datetime.now(), msg['ActualNickName'], msg['Text']]) + '\n'
     print(line)
     handle.write(line)
     if msg['Text'] == '#Stop' and msg['FromUserName'] == me:
